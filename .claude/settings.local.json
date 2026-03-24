@@ -9,7 +9,10 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "Bash(mvn --version)",
+      "Bash(sudo apt-get:*)",
+      "Bash(java --version)"
     ]
   }
 }
