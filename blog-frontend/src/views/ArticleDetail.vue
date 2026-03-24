@@ -48,7 +48,7 @@ function formatDate(dt) {
 onMounted(async () => {
   const { data } = await api.get(`/articles/${route.params.id}`)
   article.value = data
-  document.title = data.title + ' - Blog'
+  document.title = data.title + ' - Siguo Fan'
 })
 </script>
 

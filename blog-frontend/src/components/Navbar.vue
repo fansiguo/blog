@@ -3,7 +3,7 @@
     <div class="navbar-inner">
       <router-link to="/" class="logo">
         <span class="logo-icon">B</span>
-        <span class="logo-text">Blog</span>
+        <span class="logo-text">Siguo Fan</span>
       </router-link>
       <div class="nav-links">
         <router-link to="/" class="nav-link">

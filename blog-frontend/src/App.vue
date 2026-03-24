@@ -10,7 +10,7 @@
     </main>
     <footer class="site-footer">
       <div class="footer-inner">
-        <p>&copy; {{ new Date().getFullYear() }} Blog. Powered by Spring Boot & Vue.</p>
+        <p>&copy; {{ new Date().getFullYear() }} Siguo Fan. Powered by Spring Boot & Vue.</p>
       </div>
     </footer>
   </div>
