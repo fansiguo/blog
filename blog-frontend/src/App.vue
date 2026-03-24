@@ -22,33 +22,31 @@ import Navbar from './components/Navbar.vue'
 
 <style>
 :root {
-  --color-bg: #ffffff;
+  --color-bg: #eeece2;
   --color-surface: #ffffff;
-  --color-text: #333333;
-  --color-text-secondary: #555555;
-  --color-text-muted: #A9A7A7;
-  --color-primary: #3546E5;
-  --color-primary-hover: #2a38b8;
-  --color-primary-light: #eef0ff;
-  --color-accent: #ef5ba1;
-  --color-navy: #070D4A;
+  --color-text: #1a1a2e;
+  --color-text-secondary: #6b7280;
+  --color-text-muted: #9ca3af;
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-primary-light: #eff6ff;
+  --color-accent: #8b5cf6;
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-danger: #ef4444;
   --color-danger-hover: #dc2626;
-  --color-border: #d0d0d0;
-  --color-border-light: #e8e8e8;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 10px;
-  --font-sans: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-serif: 'Lora', Georgia, 'Noto Serif SC', serif;
-  --font-mono: 'Inconsolata', 'Consolas', monospace;
+  --color-border: #e5e7eb;
+  --color-border-light: #f3f4f6;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-serif: 'Noto Serif SC', Georgia, serif;
   --max-width: 780px;
-  --max-width-wide: 1100px;
+  --max-width-wide: 1200px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -71,7 +69,7 @@ body {
 .main-wide { max-width: var(--max-width-wide); }
 
 a { color: var(--color-primary); text-decoration: none; transition: color 0.2s; }
-a:hover { color: var(--color-primary-hover); text-decoration: underline; }
+a:hover { color: var(--color-primary-hover); }
 
 button, .btn {
   display: inline-flex;
@@ -90,14 +88,14 @@ button, .btn {
 }
 button:active, .btn:active { transform: scale(0.97); }
 
-.btn-primary { background: var(--color-navy); color: #fff; }
-.btn-primary:hover { background: #0a1266; color: #fff; text-decoration: none; }
+.btn-primary { background: var(--color-primary); color: #fff; }
+.btn-primary:hover { background: var(--color-primary-hover); color: #fff; text-decoration: none; }
 .btn-danger { background: var(--color-danger); color: #fff; }
 .btn-danger:hover { background: var(--color-danger-hover); color: #fff; }
 .btn-success { background: var(--color-success); color: #fff; }
 .btn-success:hover { opacity: 0.9; }
 .btn-ghost { background: transparent; color: var(--color-text-secondary); border: 1px solid var(--color-border); }
-.btn-ghost:hover { background: #f5f5f5; text-decoration: none; color: var(--color-text); }
+.btn-ghost:hover { background: var(--color-border-light); text-decoration: none; color: var(--color-text); }
 
 input, select, textarea {
   padding: 10px 14px;
@@ -112,17 +110,17 @@ input, select, textarea {
 }
 input:focus, select:focus, textarea:focus {
   outline: none;
-  border-color: var(--color-navy);
-  box-shadow: 0 0 0 2px rgba(7, 13, 74, 0.1);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 input::placeholder, textarea::placeholder { color: var(--color-text-muted); }
 
-table { width: 100%; border-collapse: collapse; background: var(--color-surface); overflow: hidden; }
-th, td { padding: 12px 16px; text-align: left; }
-th { font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-secondary); border-bottom: 2px solid var(--color-navy); }
+table { width: 100%; border-collapse: collapse; background: var(--color-surface); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); }
+th, td { padding: 14px 18px; text-align: left; }
+th { background: var(--color-border-light); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-secondary); border-bottom: 1px solid var(--color-border); }
 td { border-bottom: 1px solid var(--color-border-light); font-size: 14px; }
 tr:last-child td { border-bottom: none; }
-tr:hover td { background: #fafafa; }
+tr:hover td { background: var(--color-border-light); }
 
 .card {
   background: var(--color-surface);
@@ -130,6 +128,7 @@ tr:hover td { background: #fafafa; }
   padding: 28px;
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--color-border-light);
+  transition: box-shadow 0.3s ease;
 }
 
 /* Page transitions */
@@ -137,11 +136,6 @@ tr:hover td { background: #fafafa; }
 .fade-enter-from, .fade-leave-to { opacity: 0; }
 
 /* Footer */
-.site-footer {
-  border-top: 2px solid var(--color-navy);
-  padding: 32px 24px;
-  text-align: center;
-  background: #fafafa;
-}
+.site-footer { border-top: 1px solid var(--color-border); padding: 32px 24px; text-align: center; }
 .site-footer p { color: var(--color-text-muted); font-size: 13px; }
 </style>

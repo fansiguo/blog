@@ -2,19 +2,19 @@
   <div v-if="article" class="article-page">
     <header class="article-header">
       <div class="article-meta">
-        <time class="article-date">{{ formatDate(article.createdAt) }}</time>
         <span v-if="article.category" class="article-category">{{ article.category.name }}</span>
+        <time class="article-date">{{ formatDate(article.createdAt) }}</time>
       </div>
       <h1 class="article-title">{{ article.title }}</h1>
       <div v-if="article.tags?.length" class="article-tags">
-        <span v-for="tag in article.tags" :key="tag.id" class="tag">{{ tag.name }}</span>
+        <span v-for="tag in article.tags" :key="tag.id" class="tag"># {{ tag.name }}</span>
       </div>
-      <div class="title-line"></div>
     </header>
     <div class="article-content" v-html="renderedContent"></div>
     <footer class="article-footer">
       <router-link to="/" class="back-link">
-        &larr; 返回文章列表
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        返回文章列表
       </router-link>
     </footer>
   </div>
@@ -57,17 +57,19 @@ onMounted(async () => {
 
 .article-header {
   margin-bottom: 40px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 .article-meta {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   margin-bottom: 16px;
   font-size: 13px;
 }
 .article-category {
-  color: var(--color-navy);
+  color: var(--color-primary);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -77,96 +79,81 @@ onMounted(async () => {
 
 .article-title {
   font-family: var(--font-serif);
-  font-size: 36px;
+  font-size: 34px;
   font-weight: 700;
   line-height: 1.3;
   letter-spacing: -0.5px;
   margin-bottom: 16px;
-  color: var(--color-navy);
 }
 
-.article-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-.tag {
-  color: var(--color-text-muted);
-  font-size: 12px;
-  font-weight: 500;
-  padding: 2px 10px;
-  border: 1px solid var(--color-border-light);
-  border-radius: 2px;
-}
-
-.title-line {
-  width: 60px;
-  height: 3px;
-  background: var(--color-accent);
-}
+.article-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+.tag { color: var(--color-text-muted); font-size: 14px; font-weight: 500; }
 
 .article-content {
   font-size: 16px;
-  line-height: 1.8;
+  line-height: 1.9;
   color: var(--color-text);
 }
-.article-content :deep(h1) { font-family: var(--font-serif); font-size: 28px; font-weight: 700; margin: 48px 0 20px; color: var(--color-navy); }
-.article-content :deep(h2) { font-family: var(--font-serif); font-size: 24px; font-weight: 700; margin: 40px 0 16px; color: var(--color-navy); border-bottom: 1px solid var(--color-border-light); padding-bottom: 8px; }
-.article-content :deep(h3) { font-family: var(--font-serif); font-size: 20px; font-weight: 600; margin: 32px 0 12px; color: var(--color-navy); }
+.article-content :deep(h1) { font-family: var(--font-serif); font-size: 28px; font-weight: 700; margin: 48px 0 20px; letter-spacing: -0.3px; }
+.article-content :deep(h2) { font-family: var(--font-serif); font-size: 24px; font-weight: 700; margin: 40px 0 16px; letter-spacing: -0.3px; }
+.article-content :deep(h3) { font-family: var(--font-serif); font-size: 20px; font-weight: 600; margin: 32px 0 12px; }
 .article-content :deep(p) { margin-bottom: 20px; }
 .article-content :deep(blockquote) {
-  border-left: 3px solid var(--color-navy);
-  padding: 12px 20px;
+  border-left: 3px solid var(--color-primary);
+  padding: 16px 20px;
   margin: 24px 0;
-  background: #f8f8f8;
+  background: var(--color-primary-light);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   color: var(--color-text-secondary);
   font-style: italic;
 }
 .article-content :deep(pre) {
-  background: #2d2d2d;
-  color: #e0e0e0;
+  background: #1e293b;
+  color: #e2e8f0;
   padding: 20px 24px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   overflow-x: auto;
   margin: 24px 0;
   font-size: 14px;
-  line-height: 1.6;
-  font-family: var(--font-mono);
+  line-height: 1.7;
 }
 .article-content :deep(code) {
-  background: #f0f0f0;
+  background: var(--color-border-light);
   padding: 2px 6px;
-  border-radius: 2px;
+  border-radius: 4px;
   font-size: 14px;
-  font-family: var(--font-mono);
-  color: var(--color-navy);
+  color: var(--color-danger);
 }
 .article-content :deep(pre code) { background: transparent; padding: 0; color: inherit; }
-.article-content :deep(img) { max-width: 100%; margin: 24px 0; border: 1px solid var(--color-border-light); }
+.article-content :deep(img) { max-width: 100%; border-radius: var(--radius-md); margin: 24px 0; }
 .article-content :deep(ul), .article-content :deep(ol) { padding-left: 24px; margin-bottom: 20px; }
-.article-content :deep(li) { margin-bottom: 6px; }
+.article-content :deep(li) { margin-bottom: 8px; }
 .article-content :deep(hr) { border: none; border-top: 1px solid var(--color-border); margin: 40px 0; }
 .article-content :deep(a) { color: var(--color-primary); text-decoration: underline; text-underline-offset: 3px; }
-.article-content :deep(table) { overflow: hidden; margin: 24px 0; border: 1px solid var(--color-border-light); }
+.article-content :deep(table) { border-radius: var(--radius-sm); overflow: hidden; margin: 24px 0; }
 
 .article-footer {
   margin-top: 48px;
   padding-top: 24px;
-  border-top: 2px solid var(--color-navy);
+  border-top: 1px solid var(--color-border-light);
 }
 .back-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: var(--color-primary);
+  color: var(--color-text-secondary);
   font-size: 14px;
   font-weight: 500;
   transition: color 0.2s;
 }
-.back-link:hover { color: var(--color-navy); }
+.back-link:hover { color: var(--color-primary); }
 
 .loading { text-align: center; padding: 80px 20px; color: var(--color-text-muted); }
 .loading-spinner {
   width: 32px;
   height: 32px;
   border: 3px solid var(--color-border);
-  border-top-color: var(--color-navy);
+  border-top-color: var(--color-primary);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin: 0 auto 16px;

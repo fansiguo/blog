@@ -2,9 +2,13 @@
   <div class="login-wrapper">
     <div class="login-card">
       <div class="login-header">
-        <h2>管理后台</h2>
-        <div class="header-accent"></div>
-        <p>请输入管理员凭据</p>
+        <div class="login-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+        <h2>Welcome Back</h2>
+        <p>登录管理后台</p>
       </div>
       <form @submit.prevent="handleLogin">
         <div class="form-item">
@@ -61,31 +65,30 @@ async function handleLogin() {
 .login-card {
   width: 400px;
   background: var(--color-surface);
+  border-radius: var(--radius-lg);
   padding: 40px;
-  border-top: 3px solid var(--color-navy);
-  box-shadow: var(--shadow-md);
-}
-.login-card::before {
-  content: '';
-  display: block;
-  width: 0;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border-light);
 }
 .login-header {
   text-align: center;
   margin-bottom: 32px;
 }
-.login-header h2 {
-  font-family: var(--font-serif);
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--color-navy);
-  margin-bottom: 8px;
+.login-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--color-primary-light);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  color: var(--color-primary);
 }
-.header-accent {
-  width: 40px;
-  height: 3px;
-  background: var(--color-accent);
-  margin: 0 auto 12px;
+.login-header h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
 }
 .login-header p { color: var(--color-text-muted); font-size: 14px; }
 
@@ -105,7 +108,8 @@ async function handleLogin() {
   margin-bottom: 16px;
   padding: 10px 14px;
   background: #fef2f2;
-  border-left: 3px solid var(--color-danger);
+  border-radius: var(--radius-sm);
+  border: 1px solid #fecaca;
 }
 
 .login-btn {

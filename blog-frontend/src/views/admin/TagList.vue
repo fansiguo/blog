@@ -89,12 +89,8 @@ onMounted(loadTags)
 </script>
 
 <style scoped>
-.page-header {
-  margin-bottom: 24px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid var(--color-navy);
-}
-.page-header h2 { font-family: var(--font-serif); font-size: 20px; font-weight: 700; color: var(--color-navy); }
+.page-header { margin-bottom: 24px; }
+.page-header h2 { font-size: 20px; font-weight: 700; }
 
 .add-bar {
   display: flex;
@@ -104,6 +100,7 @@ onMounted(loadTags)
 .add-bar input { flex: 1; }
 
 .table-wrapper {
+  border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid var(--color-border-light);
 }

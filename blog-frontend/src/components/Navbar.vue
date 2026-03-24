@@ -2,17 +2,27 @@
   <nav class="navbar">
     <div class="navbar-inner">
       <router-link to="/" class="logo">
+        <span class="logo-icon">B</span>
         <span class="logo-text">Blog</span>
       </router-link>
       <div class="nav-links">
-        <router-link to="/" class="nav-link">首页</router-link>
+        <router-link to="/" class="nav-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          首页
+        </router-link>
         <template v-if="isLoggedIn">
-          <router-link to="/admin" class="nav-link">管理</router-link>
+          <router-link to="/admin" class="nav-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            管理
+          </router-link>
           <div class="nav-divider"></div>
           <span class="nav-user">{{ nickname }}</span>
           <button class="btn-logout" @click="logout">退出</button>
         </template>
-        <router-link v-else to="/login" class="nav-link">登录</router-link>
+        <router-link v-else to="/login" class="nav-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          登录
+        </router-link>
       </div>
     </div>
   </nav>
@@ -36,8 +46,10 @@ function logout() {
 
 <style scoped>
 .navbar {
-  background: var(--color-navy);
-  border-bottom: 3px solid var(--color-accent);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -46,7 +58,7 @@ function logout() {
   max-width: var(--max-width-wide);
   margin: 0 auto;
   padding: 0 24px;
-  height: 60px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -54,39 +66,50 @@ function logout() {
 .logo {
   display: flex;
   align-items: center;
-  color: #fff;
+  gap: 10px;
+  color: var(--color-text);
   font-weight: 700;
-  font-size: 22px;
-  font-family: var(--font-serif);
-  letter-spacing: -0.5px;
+  font-size: 18px;
 }
-.logo:hover { text-decoration: none; color: #fff; }
-.logo-text { color: #fff; }
+.logo:hover { text-decoration: none; }
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+}
+.logo-text { letter-spacing: -0.5px; }
 .nav-links { display: flex; align-items: center; gap: 4px; }
 .nav-link {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 14px;
+  padding: 8px 14px;
   border-radius: var(--radius-sm);
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-secondary);
   font-size: 14px;
   font-weight: 500;
   transition: all 0.2s;
 }
-.nav-link:hover { color: #fff; text-decoration: none; background: rgba(255, 255, 255, 0.1); }
-.nav-link.router-link-active { color: #fff; background: rgba(255, 255, 255, 0.15); }
-.nav-divider { width: 1px; height: 20px; background: rgba(255, 255, 255, 0.25); margin: 0 8px; }
-.nav-user { color: rgba(255, 255, 255, 0.7); font-size: 13px; font-weight: 500; padding: 0 8px; }
+.nav-link:hover { background: var(--color-border-light); color: var(--color-text); text-decoration: none; }
+.nav-link.router-link-active { color: var(--color-primary); background: var(--color-primary-light); }
+.nav-divider { width: 1px; height: 20px; background: var(--color-border); margin: 0 8px; }
+.nav-user { color: var(--color-text-secondary); font-size: 13px; font-weight: 500; padding: 0 8px; }
 .btn-logout {
-  padding: 5px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 6px 14px;
+  border: 1px solid var(--color-border);
   background: transparent;
   border-radius: var(--radius-sm);
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-secondary);
   font-size: 13px;
   cursor: pointer;
   transition: all 0.2s;
 }
-.btn-logout:hover { border-color: var(--color-accent); color: var(--color-accent); background: rgba(239, 91, 161, 0.1); }
+.btn-logout:hover { border-color: var(--color-danger); color: var(--color-danger); background: #fef2f2; }
 </style>

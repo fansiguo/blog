@@ -20,7 +20,7 @@
           <textarea v-model="form.summary" rows="2" placeholder="输入文章摘要（可选）" class="summary-input"></textarea>
         </div>
         <div class="form-item editor-wrapper">
-          <MdEditor v-model="form.content" language="zh-CN" :onUploadImg="onUploadImg" style="height: 520px; overflow: hidden;" />
+          <MdEditor v-model="form.content" language="zh-CN" :onUploadImg="onUploadImg" style="height: 520px; border-radius: var(--radius-md); overflow: hidden;" />
         </div>
       </div>
 
@@ -138,10 +138,8 @@ onMounted(loadData)
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid var(--color-navy);
 }
-.page-header h2 { font-family: var(--font-serif); font-size: 20px; font-weight: 700; color: var(--color-navy); }
+.page-header h2 { font-size: 20px; font-weight: 700; }
 .header-actions { display: flex; gap: 8px; }
 
 .editor-layout { display: flex; gap: 24px; align-items: flex-start; }
@@ -149,7 +147,6 @@ onMounted(loadData)
 .editor-sidebar { width: 260px; flex-shrink: 0; position: sticky; top: 88px; }
 
 .title-input {
-  font-family: var(--font-serif);
   font-size: 22px;
   font-weight: 600;
   border: none;
@@ -157,9 +154,8 @@ onMounted(loadData)
   border-bottom: 2px solid var(--color-border-light);
   border-radius: 0;
   background: transparent;
-  color: var(--color-navy);
 }
-.title-input:focus { border-color: var(--color-navy); box-shadow: none; }
+.title-input:focus { border-color: var(--color-primary); box-shadow: none; }
 .summary-input {
   border: none;
   padding: 10px 0;
@@ -170,24 +166,23 @@ onMounted(loadData)
   font-size: 14px;
   color: var(--color-text-secondary);
 }
-.summary-input:focus { border-color: var(--color-navy); box-shadow: none; }
+.summary-input:focus { border-color: var(--color-primary); box-shadow: none; }
 
 .editor-wrapper { margin-top: 8px; }
 
 .sidebar-section {
   background: var(--color-surface);
   border: 1px solid var(--color-border-light);
-  border-top: 3px solid var(--color-navy);
+  border-radius: var(--radius-md);
   padding: 20px;
   margin-bottom: 16px;
 }
 .sidebar-section h4 {
-  font-family: var(--font-serif);
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--color-navy);
+  color: var(--color-text-muted);
   margin-bottom: 14px;
 }
 .form-item { margin-bottom: 14px; }
@@ -207,13 +202,14 @@ onMounted(loadData)
   gap: 4px;
   padding: 4px 12px;
   border: 1px solid var(--color-border);
+  border-radius: 20px;
   font-size: 13px;
   cursor: pointer;
   transition: all 0.2s;
   color: var(--color-text-secondary);
 }
 .tag-checkbox input { display: none; }
-.tag-checkbox:hover { border-color: var(--color-navy); }
-.tag-checkbox.checked { background: var(--color-navy); border-color: var(--color-navy); color: #fff; font-weight: 500; }
+.tag-checkbox:hover { border-color: var(--color-primary); }
+.tag-checkbox.checked { background: var(--color-primary-light); border-color: var(--color-primary); color: var(--color-primary); font-weight: 500; }
 .empty-hint { font-size: 13px; color: var(--color-text-muted); }
 </style>

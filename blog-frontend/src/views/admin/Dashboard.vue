@@ -28,13 +28,13 @@
 <style scoped>
 .admin-layout {
   display: flex;
-  gap: 32px;
+  gap: 24px;
   min-height: calc(100vh - 180px);
   max-width: var(--max-width-wide);
   margin: 0 auto;
 }
 .sidebar {
-  width: 200px;
+  width: 220px;
   flex-shrink: 0;
   position: sticky;
   top: 88px;
@@ -42,33 +42,32 @@
 }
 .sidebar-header {
   margin-bottom: 8px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--color-navy);
 }
 .sidebar-header h3 {
-  font-family: var(--font-serif);
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--color-navy);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  padding: 0 12px;
 }
 .sidebar-nav { display: flex; flex-direction: column; gap: 2px; }
 .sidebar-link {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 9px 12px;
+  padding: 10px 12px;
   border-radius: var(--radius-sm);
   color: var(--color-text-secondary);
   font-size: 14px;
   font-weight: 500;
   transition: all 0.2s;
-  border-left: 3px solid transparent;
 }
-.sidebar-link:hover { color: var(--color-navy); text-decoration: none; background: #f5f5f5; border-left-color: var(--color-accent); }
+.sidebar-link:hover { background: var(--color-surface); color: var(--color-text); text-decoration: none; box-shadow: var(--shadow-sm); }
 .sidebar-link.router-link-active {
-  background: var(--color-navy);
+  background: var(--color-primary);
   color: #fff;
-  border-left-color: var(--color-accent);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
 }
 .admin-content { flex: 1; min-width: 0; }
 </style>
