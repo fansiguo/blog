@@ -230,6 +230,11 @@ server {
         try_files \$uri \$uri/ /index.html;
     }
 
+    # Serve uploaded files
+    location /uploads/ {
+        alias ${SCRIPT_DIR}/uploads/;
+    }
+
     # Proxy API requests to Spring Boot backend
     location /api/ {
         proxy_pass http://127.0.0.1:8080;

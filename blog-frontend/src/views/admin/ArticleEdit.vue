@@ -20,7 +20,7 @@
           <textarea v-model="form.summary" rows="2" placeholder="输入文章摘要（可选）" class="summary-input"></textarea>
         </div>
         <div class="form-item editor-wrapper">
-          <MdEditor v-model="form.content" language="zh-CN" style="height: 520px; border-radius: var(--radius-md); overflow: hidden;" />
+          <MdEditor v-model="form.content" language="zh-CN" :onUploadImg="onUploadImg" style="height: 520px; border-radius: var(--radius-md); overflow: hidden;" />
         </div>
       </div>
 
@@ -100,6 +100,19 @@ async function loadData() {
       tagIds: data.tags?.map(t => t.id) || []
     }
   }
+}
+
+async function onUploadImg(files, callback) {
+  const urls = []
+  for (const file of files) {
+    const formData = new FormData()
+    formData.append('file', file)
+    const { data } = await api.post('/admin/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+    urls.push(data.url)
+  }
+  callback(urls)
 }
 
 async function handleSave() {
