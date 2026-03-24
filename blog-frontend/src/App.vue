@@ -45,8 +45,8 @@ import Navbar from './components/Navbar.vue'
   --radius-lg: 16px;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-serif: 'Noto Serif SC', Georgia, serif;
-  --max-width: 720px;
-  --max-width-wide: 1080px;
+  --max-width: 780px;
+  --max-width-wide: 1200px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
