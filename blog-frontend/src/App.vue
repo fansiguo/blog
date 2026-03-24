@@ -22,7 +22,7 @@ import Navbar from './components/Navbar.vue'
 
 <style>
 :root {
-  --color-bg: #fafafa;
+  --color-bg: #eeece2;
   --color-surface: #ffffff;
   --color-text: #1a1a2e;
   --color-text-secondary: #6b7280;
