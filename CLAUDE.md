@@ -4,76 +4,104 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Hexo 8.x static blog site using the default **landscape** theme. Content is written in Markdown with YAML front matter.
+Full-stack blog system with admin panel. Spring Boot 3.2 backend + Vue 3 frontend + MySQL storage.
 
 ## Commands
 
+### Backend (blog-backend/)
+
 ```bash
-# Development server (http://localhost:4000)
-npx hexo server            # or: npm run server
+cd blog-backend
 
-# Generate static files into public/
-npx hexo generate          # or: npm run build
+# Run dev server (requires MySQL on localhost:3306, database: blog)
+mvn spring-boot:run
 
-# Clean generated files and cache
-npx hexo clean             # or: npm run clean
+# Build jar
+mvn clean package -DskipTests
 
-# Clean + regenerate (useful when things look stale)
-npx hexo clean && npx hexo generate
+# Run tests
+mvn test
 
-# Create a new post
-npx hexo new "Post Title"
+# Run single test class
+mvn test -Dtest=ArticleServiceTest
+```
 
-# Create a draft (not published until promoted)
-npx hexo new draft "Draft Title"
+### Frontend (blog-frontend/)
 
-# Promote a draft to a post
-npx hexo publish "Draft Title"
+```bash
+cd blog-frontend
 
-# Create a new page (e.g., about page)
-npx hexo new page "page-name"
+# Install dependencies
+npm install
 
-# Deploy (requires deploy config in _config.yml)
-npx hexo deploy            # or: npm run deploy
+# Dev server (http://localhost:5173, proxies /api to :8080)
+npm run dev
+
+# Production build (outputs to dist/)
+npm run build
+```
+
+### Full deploy
+
+```bash
+./deploy.sh                    # Build & deploy everything
+./deploy.sh -d /usr/share/nginx/html   # Custom frontend dir
+./deploy.sh --skip-build       # Redeploy without rebuilding
 ```
 
 ## Architecture
 
 ```
-_config.yml              # Main site configuration (title, URL, theme, permalink pattern, etc.)
-_config.landscape.yml    # Theme-specific config overrides for the landscape theme
-source/
-  _posts/                # Published blog posts (Markdown with front matter)
-  _drafts/               # Draft posts (not generated unless --draft flag is used)
-  <other>/               # Standalone pages (e.g., source/about/index.md)
-scaffolds/               # Templates for `hexo new` — defines default front matter
-  post.md                # Template for new posts (title, date, tags)
-  draft.md               # Template for new drafts (title, tags — no date until published)
-  page.md                # Template for new pages (title, date)
-themes/                  # Theme directory; active theme set by `theme:` in _config.yml
-public/                  # Generated output (gitignored)
-db.json                  # Hexo cache (gitignored)
+blog-backend/                  # Spring Boot 3.2 + JPA + Spring Security + JWT
+  src/main/java/com/blog/
+    config/                    # SecurityConfig, CorsConfig, JWT (JwtUtil, JwtAuthFilter)
+    controller/                # REST API controllers
+      ArticleController        # GET /api/articles (public)
+      AdminArticleController   # /api/admin/articles (authenticated)
+      CategoryController       # /api/categories + /api/admin/categories
+      TagController            # /api/tags + /api/admin/tags
+      AuthController           # POST /api/auth/login
+    entity/                    # JPA entities: Article, Category, Tag, User
+    repository/                # Spring Data JPA repositories
+    service/                   # Business logic
+    dto/                       # ArticleDTO, LoginRequest, LoginResponse
+  src/main/resources/
+    application.yml            # DB connection, JWT config
+    schema.sql                 # Default admin user seed
+
+blog-frontend/                 # Vue 3 + Vite + Vue Router + Axios
+  src/
+    api/index.js               # Axios instance with JWT interceptor
+    router/index.js            # Routes with auth guard on /admin/*
+    views/
+      Home.vue                 # Public article list with pagination
+      ArticleDetail.vue        # Article page with Markdown rendering
+      Login.vue                # Admin login
+      admin/
+        Dashboard.vue          # Admin layout with sidebar
+        ArticleList.vue        # Article CRUD list
+        ArticleEdit.vue        # Markdown editor (md-editor-v3)
+        CategoryList.vue       # Category management
+        TagList.vue            # Tag management
+    components/
+      Navbar.vue, Pagination.vue
 ```
 
-## Post Front Matter
+## API Design
 
-Posts use YAML front matter. The scaffold template includes `title`, `date`, and `tags`. Common fields:
+- **Public** (no auth): `GET /api/articles`, `GET /api/articles/:id`, `GET /api/categories`, `GET /api/tags`
+- **Auth**: `POST /api/auth/login` → returns JWT token
+- **Admin** (Bearer token required): `/api/admin/articles` (CRUD), `/api/admin/categories` (CRUD), `/api/admin/tags` (CRUD)
 
-```yaml
----
-title: My Post Title
-date: 2026-03-24 10:00:00
-tags:
-  - javascript
-  - tutorial
-categories:
-  - Tech
----
-```
+## Database
 
-## Key Configuration
+MySQL `blog` database. JPA auto-creates tables (`ddl-auto: update`). Tables: `user`, `article`, `category`, `tag`, `article_tag`.
 
-- **Permalink pattern**: `:year/:month/:day/:title/` (set in `_config.yml`)
-- **Syntax highlighting**: highlight.js (configured in `_config.yml` under `syntax_highlighter`)
-- **Pagination**: 10 posts per page
-- **Theme config**: Theme-specific settings go in `_config.landscape.yml` (not inside the theme directory), following Hexo's alternate theme config convention
+Default admin credentials: `admin` / `admin123`
+
+## Key Patterns
+
+- JWT auth: token in `Authorization: Bearer <token>` header, validated by `JwtAuthFilter`
+- Frontend proxy: Vite proxies `/api` to `localhost:8080` in dev mode
+- Article content stored as Markdown, rendered client-side with `markdown-it`
+- Markdown editing uses `md-editor-v3` with live preview

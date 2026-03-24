@@ -1,8 +1,17 @@
 .DS_Store
 Thumbs.db
-db.json
 *.log
-node_modules/
-public/
-.deploy*/
-_multiconfig.yml
+
+# Backend
+blog-backend/target/
+blog-backend/*.iml
+blog-backend/.mvn/
+
+# Frontend
+blog-frontend/node_modules/
+blog-frontend/dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
