@@ -221,6 +221,7 @@ setup_nginx() {
 server {
     listen 80;
     server_name _;
+    client_max_body_size 20m;
 
     root ${WEB_DIR};
     index index.html;
