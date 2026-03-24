@@ -7,7 +7,7 @@ const routes = [
   {
     path: '/admin',
     component: () => import('../views/admin/Dashboard.vue'),
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true, wide: true },
     children: [
       { path: '', redirect: '/admin/articles' },
       { path: 'articles', component: () => import('../views/admin/ArticleList.vue') },

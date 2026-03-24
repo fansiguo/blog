@@ -1,47 +1,58 @@
 <template>
   <div>
-    <h2>{{ isEdit ? '编辑文章' : '新建文章' }}</h2>
-    <div class="card" style="margin-top:16px">
-      <div class="form-item">
-        <label>标题</label>
-        <input v-model="form.title" placeholder="文章标题" />
+    <div class="page-header">
+      <h2>{{ isEdit ? '编辑文章' : '新建文章' }}</h2>
+      <div class="header-actions">
+        <router-link to="/admin/articles" class="btn btn-ghost">取消</router-link>
+        <button class="btn btn-primary" @click="handleSave">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          保存
+        </button>
       </div>
-      <div class="form-row">
-        <div class="form-item" style="flex:1">
-          <label>分类</label>
-          <select v-model="form.categoryId">
-            <option :value="null">无分类</option>
-            <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option>
-          </select>
+    </div>
+
+    <div class="editor-layout">
+      <div class="editor-main">
+        <div class="form-item">
+          <input v-model="form.title" placeholder="输入文章标题..." class="title-input" />
         </div>
-        <div class="form-item" style="flex:1">
-          <label>状态</label>
-          <select v-model="form.status">
-            <option value="DRAFT">草稿</option>
-            <option value="PUBLISHED">发布</option>
-          </select>
+        <div class="form-item">
+          <textarea v-model="form.summary" rows="2" placeholder="输入文章摘要（可选）" class="summary-input"></textarea>
         </div>
-      </div>
-      <div class="form-item">
-        <label>标签</label>
-        <div class="tag-select">
-          <label v-for="tag in tags" :key="tag.id" class="tag-option">
-            <input type="checkbox" :value="tag.id" v-model="form.tagIds" />
-            {{ tag.name }}
-          </label>
+        <div class="form-item editor-wrapper">
+          <MdEditor v-model="form.content" language="zh-CN" style="height: 520px; border-radius: var(--radius-md); overflow: hidden;" />
         </div>
       </div>
-      <div class="form-item">
-        <label>摘要</label>
-        <textarea v-model="form.summary" rows="2" placeholder="文章摘要"></textarea>
-      </div>
-      <div class="form-item">
-        <label>正文 (Markdown)</label>
-        <MdEditor v-model="form.content" language="zh-CN" style="height: 500px" />
-      </div>
-      <div style="margin-top:16px; display:flex; gap:12px">
-        <button class="btn btn-primary" @click="handleSave">保存</button>
-        <router-link to="/admin/articles" class="btn">返回</router-link>
+
+      <div class="editor-sidebar">
+        <div class="sidebar-section">
+          <h4>发布设置</h4>
+          <div class="form-item">
+            <label>状态</label>
+            <select v-model="form.status">
+              <option value="DRAFT">草稿</option>
+              <option value="PUBLISHED">发布</option>
+            </select>
+          </div>
+          <div class="form-item">
+            <label>分类</label>
+            <select v-model="form.categoryId">
+              <option :value="null">无分类</option>
+              <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <h4>标签</h4>
+          <div class="tag-grid">
+            <label v-for="tag in tags" :key="tag.id" class="tag-checkbox" :class="{ checked: form.tagIds.includes(tag.id) }">
+              <input type="checkbox" :value="tag.id" v-model="form.tagIds" />
+              {{ tag.name }}
+            </label>
+          </div>
+          <p v-if="tags.length === 0" class="empty-hint">暂无标签，请先在标签管理中创建</p>
+        </div>
       </div>
     </div>
   </div>
@@ -109,10 +120,83 @@ onMounted(loadData)
 </script>
 
 <style scoped>
-.form-item { margin-bottom: 16px; }
-.form-item label { display: block; margin-bottom: 6px; font-size: 14px; color: #666; }
-.form-row { display: flex; gap: 16px; }
-.tag-select { display: flex; flex-wrap: wrap; gap: 12px; }
-.tag-option { display: flex; align-items: center; gap: 4px; font-size: 14px; cursor: pointer; }
-.tag-option input { width: auto; }
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.page-header h2 { font-size: 20px; font-weight: 700; }
+.header-actions { display: flex; gap: 8px; }
+
+.editor-layout { display: flex; gap: 24px; align-items: flex-start; }
+.editor-main { flex: 1; min-width: 0; }
+.editor-sidebar { width: 260px; flex-shrink: 0; position: sticky; top: 88px; }
+
+.title-input {
+  font-size: 22px;
+  font-weight: 600;
+  border: none;
+  padding: 12px 0;
+  border-bottom: 2px solid var(--color-border-light);
+  border-radius: 0;
+  background: transparent;
+}
+.title-input:focus { border-color: var(--color-primary); box-shadow: none; }
+.summary-input {
+  border: none;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border-light);
+  border-radius: 0;
+  background: transparent;
+  resize: none;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+.summary-input:focus { border-color: var(--color-primary); box-shadow: none; }
+
+.editor-wrapper { margin-top: 8px; }
+
+.sidebar-section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.sidebar-section h4 {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  margin-bottom: 14px;
+}
+.form-item { margin-bottom: 14px; }
+.form-item:last-child { margin-bottom: 0; }
+.form-item label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.tag-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--color-text-secondary);
+}
+.tag-checkbox input { display: none; }
+.tag-checkbox:hover { border-color: var(--color-primary); }
+.tag-checkbox.checked { background: var(--color-primary-light); border-color: var(--color-primary); color: var(--color-primary); font-weight: 500; }
+.empty-hint { font-size: 13px; color: var(--color-text-muted); }
 </style>
