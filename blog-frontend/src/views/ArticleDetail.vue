@@ -53,7 +53,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.article-page { max-width: 680px; margin: 0 auto; }
+.article-page { max-width: 100%; }
 
 .article-header {
   margin-bottom: 40px;

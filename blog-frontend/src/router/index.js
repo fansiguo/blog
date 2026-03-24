@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   { path: '/', component: () => import('../views/Home.vue'), meta: { wide: true } },
-  { path: '/article/:id', component: () => import('../views/ArticleDetail.vue') },
+  { path: '/article/:id', component: () => import('../views/ArticleDetail.vue'), meta: { wide: true } },
   { path: '/login', component: () => import('../views/Login.vue') },
   {
     path: '/admin',
