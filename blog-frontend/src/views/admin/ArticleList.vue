@@ -77,11 +77,12 @@ onMounted(loadArticles)
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--color-navy);
 }
-.page-header h2 { font-size: 20px; font-weight: 700; }
+.page-header h2 { font-family: var(--font-serif); font-size: 20px; font-weight: 700; color: var(--color-navy); }
 
 .table-wrapper {
-  border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid var(--color-border-light);
 }
@@ -92,8 +93,7 @@ onMounted(loadArticles)
 .category-badge {
   display: inline-block;
   padding: 2px 10px;
-  background: var(--color-border-light);
-  border-radius: 20px;
+  background: #f0f0f0;
   font-size: 12px;
   font-weight: 500;
   color: var(--color-text-secondary);
@@ -102,7 +102,6 @@ onMounted(loadArticles)
 .status-badge {
   display: inline-block;
   padding: 3px 10px;
-  border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
 }

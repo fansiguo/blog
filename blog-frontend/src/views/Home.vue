@@ -2,13 +2,10 @@
   <div>
     <header class="page-header">
       <h1>Latest Posts</h1>
-      <p class="page-subtitle">Thoughts, ideas, and stories</p>
+      <div class="header-line"></div>
     </header>
 
     <div v-if="articles.length === 0" class="empty-state">
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="empty-icon">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
-      </svg>
       <p>暂无文章</p>
     </div>
 
@@ -17,15 +14,14 @@
         <router-link :to="`/article/${article.id}`" class="article-link">
           <div class="article-body">
             <div class="article-meta">
-              <span v-if="article.category" class="article-category">{{ article.category.name }}</span>
               <time class="article-date">{{ formatDate(article.createdAt) }}</time>
+              <span v-if="article.category" class="article-category">{{ article.category.name }}</span>
             </div>
             <h2 class="article-title">{{ article.title }}</h2>
             <p v-if="article.summary" class="article-summary">{{ article.summary }}</p>
             <div v-if="article.tags?.length" class="article-tags">
-              <span v-for="tag in article.tags" :key="tag.id" class="tag"># {{ tag.name }}</span>
+              <span v-for="tag in article.tags" :key="tag.id" class="tag">{{ tag.name }}</span>
             </div>
-            <span class="read-more">阅读全文 &rarr;</span>
           </div>
         </router-link>
       </article>
@@ -60,50 +56,59 @@ onMounted(loadArticles)
 </script>
 
 <style scoped>
-.page-header { margin-bottom: 48px; }
+.page-header { margin-bottom: 40px; }
 .page-header h1 {
   font-family: var(--font-serif);
-  font-size: 36px;
+  font-size: 32px;
   font-weight: 700;
-  letter-spacing: -0.5px;
-  margin-bottom: 8px;
+  color: var(--color-navy);
+  margin-bottom: 12px;
 }
-.page-subtitle { color: var(--color-text-muted); font-size: 16px; }
+.header-line {
+  width: 60px;
+  height: 3px;
+  background: var(--color-accent);
+}
 
 .empty-state { text-align: center; padding: 80px 20px; color: var(--color-text-muted); }
-.empty-icon { margin-bottom: 16px; opacity: 0.4; }
 .empty-state p { font-size: 15px; }
 
-.article-list { display: flex; flex-direction: column; gap: 1px; }
+.article-list { display: flex; flex-direction: column; gap: 0; }
 
 .article-card {
+  position: relative;
+  border-top: 3px solid var(--color-navy);
   background: var(--color-surface);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border-light);
-  overflow: hidden;
-  transition: all 0.3s ease;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
+  transition: box-shadow 0.2s ease;
+}
+.article-card::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  right: 0;
+  width: 3px;
+  height: calc(100% + 3px);
+  background: var(--color-accent);
 }
 .article-card:hover {
-  box-shadow: var(--shadow-lg);
-  border-color: var(--color-border);
-  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .article-link { display: block; text-decoration: none; color: inherit; }
 .article-link:hover { text-decoration: none; color: inherit; }
 
-.article-body { padding: 28px 32px; }
+.article-body { padding: 24px 28px; }
 
 .article-meta {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 16px;
+  margin-bottom: 10px;
   font-size: 13px;
 }
 .article-category {
-  color: var(--color-primary);
+  color: var(--color-navy);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -117,7 +122,7 @@ onMounted(loadArticles)
   font-weight: 700;
   line-height: 1.4;
   margin-bottom: 10px;
-  color: var(--color-text);
+  color: var(--color-navy);
   transition: color 0.2s;
 }
 .article-card:hover .article-title { color: var(--color-primary); }
@@ -133,19 +138,13 @@ onMounted(loadArticles)
   overflow: hidden;
 }
 
-.article-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.article-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .tag {
   color: var(--color-text-muted);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
+  padding: 2px 10px;
+  border: 1px solid var(--color-border-light);
+  border-radius: 2px;
 }
-
-.read-more {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--color-primary);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.article-card:hover .read-more { opacity: 1; }
 </style>
