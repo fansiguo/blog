@@ -11,6 +11,46 @@
       </div>
     </header>
     <div class="article-content" v-html="renderedContent"></div>
+
+    <!-- 评论区 -->
+    <section class="comments-section">
+      <h2 class="comments-title">评论 ({{ comments.length }})</h2>
+
+      <!-- 评论表单 -->
+      <form class="comment-form card" @submit.prevent="submitComment">
+        <div class="form-row">
+          <div class="form-item">
+            <input v-model="commentForm.nickname" placeholder="昵称 *" required maxlength="50" />
+          </div>
+          <div class="form-item">
+            <input v-model="commentForm.email" placeholder="邮箱（选填）" maxlength="100" />
+          </div>
+        </div>
+        <div class="form-item">
+          <textarea v-model="commentForm.content" placeholder="写下你的评论..." rows="4" required maxlength="2000"></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" :disabled="submitting">
+            {{ submitting ? '提交中...' : '发表评论' }}
+          </button>
+        </div>
+      </form>
+
+      <!-- 评论列表 -->
+      <div v-if="comments.length > 0" class="comment-list">
+        <div v-for="comment in comments" :key="comment.id" class="comment-item">
+          <div class="comment-header">
+            <span class="comment-nickname">{{ comment.nickname }}</span>
+            <time class="comment-time">{{ formatDate(comment.createdAt) }}</time>
+          </div>
+          <p class="comment-content">{{ comment.content }}</p>
+        </div>
+      </div>
+      <div v-else class="no-comments">
+        <p>暂无评论，来发表第一条评论吧</p>
+      </div>
+    </section>
+
     <footer class="article-footer">
       <router-link to="/" class="back-link">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
@@ -33,6 +73,9 @@ import api from '../api'
 
 const route = useRoute()
 const article = ref(null)
+const comments = ref([])
+const submitting = ref(false)
+const commentForm = ref({ nickname: '', email: '', content: '' })
 const md = new MarkdownIt({ html: true, linkify: true, typographer: true })
 
 const renderedContent = computed(() => {
@@ -45,10 +88,28 @@ function formatDate(dt) {
   return d.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })
 }
 
+async function loadComments() {
+  const { data } = await api.get(`/articles/${route.params.id}/comments`)
+  comments.value = data
+}
+
+async function submitComment() {
+  if (!commentForm.value.nickname.trim() || !commentForm.value.content.trim()) return
+  submitting.value = true
+  try {
+    await api.post(`/articles/${route.params.id}/comments`, commentForm.value)
+    commentForm.value = { nickname: commentForm.value.nickname, email: commentForm.value.email, content: '' }
+    await loadComments()
+  } finally {
+    submitting.value = false
+  }
+}
+
 onMounted(async () => {
   const { data } = await api.get(`/articles/${route.params.id}`)
   article.value = data
   document.title = data.title + ' - Siguo Fan'
+  await loadComments()
 })
 </script>
 
@@ -131,6 +192,72 @@ onMounted(async () => {
 .article-content :deep(hr) { border: none; border-top: 1px solid var(--color-border); margin: 40px 0; }
 .article-content :deep(a) { color: var(--color-primary); text-decoration: underline; text-underline-offset: 3px; }
 .article-content :deep(table) { border-radius: var(--radius-sm); overflow: hidden; margin: 24px 0; }
+
+/* 评论区 */
+.comments-section {
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-border);
+}
+.comments-title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.comment-form {
+  margin-bottom: 32px;
+}
+.form-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.form-row .form-item { flex: 1; }
+.comment-form .form-item { margin-bottom: 12px; }
+.comment-form .form-item:last-of-type { margin-bottom: 0; }
+.comment-form textarea { resize: vertical; }
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.comment-list { display: flex; flex-direction: column; gap: 0; }
+.comment-item {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+.comment-item:last-child { border-bottom: none; }
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.comment-nickname {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--color-text);
+}
+.comment-time {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+.comment-content {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  white-space: pre-wrap;
+}
+
+.no-comments {
+  text-align: center;
+  padding: 32px 0;
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
 
 .article-footer {
   margin-top: 48px;

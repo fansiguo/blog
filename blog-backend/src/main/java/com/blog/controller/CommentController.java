@@ -1,0 +1,37 @@
+package com.blog.controller;
+
+import com.blog.dto.CommentDTO;
+import com.blog.entity.Comment;
+import com.blog.service.CommentService;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+public class CommentController {
+    private final CommentService commentService;
+
+    public CommentController(CommentService commentService) {
+        this.commentService = commentService;
+    }
+
+    @GetMapping("/api/articles/{articleId}/comments")
+    public List<Comment> list(@PathVariable Long articleId) {
+        return commentService.findByArticleId(articleId);
+    }
+
+    @PostMapping("/api/articles/{articleId}/comments")
+    public ResponseEntity<Comment> create(@PathVariable Long articleId,
+                                          @Valid @RequestBody CommentDTO dto) {
+        Comment comment = commentService.create(articleId, dto);
+        return ResponseEntity.ok(comment);
+    }
+
+    @DeleteMapping("/api/admin/comments/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        commentService.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+}
