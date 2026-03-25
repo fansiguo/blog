@@ -44,21 +44,27 @@
         </tbody>
       </table>
     </div>
+
+    <Pagination :currentPage="page" :totalPages="totalPages" @change="page = $event; loadTags()" />
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import api from '../../api'
+import Pagination from '../../components/Pagination.vue'
 
 const tags = ref([])
+const page = ref(0)
+const totalPages = ref(0)
 const newName = ref('')
 const editId = ref(null)
 const editName = ref('')
 
 async function loadTags() {
-  const { data } = await api.get('/tags')
-  tags.value = data
+  const { data } = await api.get('/admin/tags', { params: { page: page.value, size: 10 } })
+  tags.value = data.content
+  totalPages.value = data.totalPages
 }
 
 async function handleAdd() {

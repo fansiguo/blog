@@ -2,6 +2,9 @@ package com.blog.controller;
 
 import com.blog.entity.Category;
 import com.blog.service.CategoryService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +22,12 @@ public class CategoryController {
     @GetMapping("/categories")
     public List<Category> list() {
         return categoryService.findAll();
+    }
+
+    @GetMapping("/admin/categories")
+    public Page<Category> listPaged(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "10") int size) {
+        return categoryService.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt")));
     }
 
     @PostMapping("/admin/categories")

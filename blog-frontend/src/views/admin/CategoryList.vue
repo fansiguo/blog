@@ -44,21 +44,27 @@
         </tbody>
       </table>
     </div>
+
+    <Pagination :currentPage="page" :totalPages="totalPages" @change="page = $event; loadCategories()" />
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import api from '../../api'
+import Pagination from '../../components/Pagination.vue'
 
 const categories = ref([])
+const page = ref(0)
+const totalPages = ref(0)
 const newName = ref('')
 const editId = ref(null)
 const editName = ref('')
 
 async function loadCategories() {
-  const { data } = await api.get('/categories')
-  categories.value = data
+  const { data } = await api.get('/admin/categories', { params: { page: page.value, size: 10 } })
+  categories.value = data.content
+  totalPages.value = data.totalPages
 }
 
 async function handleAdd() {
