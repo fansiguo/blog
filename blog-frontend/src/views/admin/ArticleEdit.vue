@@ -20,7 +20,7 @@
           <textarea v-model="form.summary" rows="2" placeholder="输入文章摘要（可选）" class="summary-input"></textarea>
         </div>
         <div class="form-item editor-wrapper">
-          <MdEditor v-model="form.content" language="zh-CN" :onUploadImg="onUploadImg" style="height: 520px; border-radius: var(--radius-md); overflow: hidden;" />
+          <MdEditor v-model="form.content" language="zh-CN" :preview="false" :onUploadImg="onUploadImg" :toolbars="toolbars" style="height: calc(100vh - 280px); min-height: 500px; border-radius: var(--radius-md); overflow: hidden;" />
         </div>
       </div>
 
@@ -68,6 +68,13 @@ import api from '../../api'
 const route = useRoute()
 const router = useRouter()
 const isEdit = computed(() => !!route.params.id)
+const toolbars = [
+  'bold', 'underline', 'italic', 'strikeThrough', '-',
+  'title', 'sub', 'sup', 'quote', 'unorderedList', 'orderedList', 'task', '-',
+  'codeRow', 'code', 'link', 'image', 'table', '-',
+  'revoke', 'next', '=',
+  'preview', 'htmlPreview', 'fullscreen'
+]
 const categories = ref([])
 const tags = ref([])
 const form = ref({
