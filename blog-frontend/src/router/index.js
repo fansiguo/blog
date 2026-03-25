@@ -14,7 +14,8 @@ const routes = [
       { path: 'articles/new', component: () => import('../views/admin/ArticleEdit.vue') },
       { path: 'articles/:id/edit', component: () => import('../views/admin/ArticleEdit.vue') },
       { path: 'categories', component: () => import('../views/admin/CategoryList.vue') },
-      { path: 'tags', component: () => import('../views/admin/TagList.vue') }
+      { path: 'tags', component: () => import('../views/admin/TagList.vue') },
+      { path: 'comments', component: () => import('../views/admin/CommentList.vue') }
     ]
   }
 ]

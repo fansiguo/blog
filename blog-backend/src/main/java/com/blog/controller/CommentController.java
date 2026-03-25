@@ -29,6 +29,16 @@ public class CommentController {
         return ResponseEntity.ok(comment);
     }
 
+    @GetMapping("/api/admin/comments")
+    public List<Comment> listAll() {
+        return commentService.findAll();
+    }
+
+    @PutMapping("/api/admin/comments/{id}/toggle-visible")
+    public ResponseEntity<Comment> toggleVisible(@PathVariable Long id) {
+        return ResponseEntity.ok(commentService.toggleVisible(id));
+    }
+
     @DeleteMapping("/api/admin/comments/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         commentService.deleteById(id);
