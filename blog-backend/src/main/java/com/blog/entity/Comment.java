@@ -28,6 +28,9 @@ public class Comment {
     @Column(name = "article_id", insertable = false, updatable = false)
     private Long articleId;
 
+    @Column(nullable = false)
+    private Boolean visible = true;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -47,6 +50,8 @@ public class Comment {
     public Article getArticle() { return article; }
     public void setArticle(Article article) { this.article = article; }
     public Long getArticleId() { return articleId; }
+    public Boolean getVisible() { return visible; }
+    public void setVisible(Boolean visible) { this.visible = visible; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }

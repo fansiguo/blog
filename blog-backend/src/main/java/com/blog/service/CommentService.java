@@ -20,7 +20,18 @@ public class CommentService {
     }
 
     public List<Comment> findByArticleId(Long articleId) {
-        return commentRepository.findByArticleIdOrderByCreatedAtDesc(articleId);
+        return commentRepository.findByArticleIdAndVisibleTrueOrderByCreatedAtDesc(articleId);
+    }
+
+    public List<Comment> findAll() {
+        return commentRepository.findAllByOrderByCreatedAtDesc();
+    }
+
+    @Transactional
+    public Comment toggleVisible(Long id) {
+        Comment comment = commentRepository.findById(id).orElseThrow();
+        comment.setVisible(!comment.getVisible());
+        return commentRepository.save(comment);
     }
 
     @Transactional
