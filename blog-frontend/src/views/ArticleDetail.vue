@@ -100,9 +100,10 @@ async function loadComments() {
   const { data } = await api.get(`/articles/${route.params.id}/comments`, {
     params: { page: commentPage.value, size: 10 }
   })
-  comments.value = data.content
-  commentTotalPages.value = data.totalPages
-  commentTotal.value = data.totalElements
+  comments.value = data.content || []
+  const pg = data.page || data
+  commentTotalPages.value = pg.totalPages || 0
+  commentTotal.value = pg.totalElements || 0
 }
 
 function onCommentPageChange(p) {

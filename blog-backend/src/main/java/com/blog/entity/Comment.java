@@ -28,7 +28,7 @@ public class Comment {
     @Column(name = "article_id", insertable = false, updatable = false)
     private Long articleId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private Boolean visible = true;
 
     @Column(name = "created_at")
