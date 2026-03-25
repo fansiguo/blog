@@ -22,11 +22,11 @@ public class CommentService {
     }
 
     public List<Comment> findByArticleId(Long articleId) {
-        return commentRepository.findByArticleIdAndVisibleTrueOrderByCreatedAtDesc(articleId);
+        return commentRepository.findVisibleByArticleId(articleId);
     }
 
     public Page<Comment> findByArticleId(Long articleId, Pageable pageable) {
-        return commentRepository.findByArticleIdAndVisibleTrue(articleId, pageable);
+        return commentRepository.findVisibleByArticleId(articleId, pageable);
     }
 
     @Transactional(readOnly = true)
