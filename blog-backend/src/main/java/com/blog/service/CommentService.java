@@ -23,8 +23,15 @@ public class CommentService {
         return commentRepository.findByArticleIdAndVisibleTrueOrderByCreatedAtDesc(articleId);
     }
 
+    @Transactional(readOnly = true)
     public List<Comment> findAll() {
-        return commentRepository.findAllWithArticle();
+        List<Comment> comments = commentRepository.findAllWithArticle();
+        for (Comment c : comments) {
+            if (c.getArticle() != null) {
+                c.setArticleTitle(c.getArticle().getTitle());
+            }
+        }
+        return comments;
     }
 
     @Transactional
