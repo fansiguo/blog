@@ -14,7 +14,7 @@
 
     <!-- 评论区 -->
     <section class="comments-section">
-      <h2 class="comments-title">评论 ({{ comments.length }})</h2>
+      <h2 class="comments-title">评论 ({{ commentTotal }})</h2>
 
       <!-- 评论表单 -->
       <form class="comment-form card" @submit.prevent="submitComment">
@@ -50,6 +50,8 @@
       <div v-else class="no-comments">
         <p>暂无评论，来发表第一条评论吧</p>
       </div>
+
+      <Pagination :currentPage="commentPage" :totalPages="commentTotalPages" @change="onCommentPageChange" />
     </section>
 
     <footer class="article-footer">
@@ -71,10 +73,14 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import MarkdownIt from 'markdown-it'
 import api from '../api'
+import Pagination from '../components/Pagination.vue'
 
 const route = useRoute()
 const article = ref(null)
 const comments = ref([])
+const commentPage = ref(0)
+const commentTotalPages = ref(0)
+const commentTotal = ref(0)
 const submitting = ref(false)
 const commentForm = ref({ nickname: '', email: '', content: '' })
 const commentError = ref('')
@@ -91,8 +97,17 @@ function formatDate(dt) {
 }
 
 async function loadComments() {
-  const { data } = await api.get(`/articles/${route.params.id}/comments`)
-  comments.value = data
+  const { data } = await api.get(`/articles/${route.params.id}/comments`, {
+    params: { page: commentPage.value, size: 10 }
+  })
+  comments.value = data.content
+  commentTotalPages.value = data.totalPages
+  commentTotal.value = data.totalElements
+}
+
+function onCommentPageChange(p) {
+  commentPage.value = p
+  loadComments()
 }
 
 async function submitComment() {
@@ -102,6 +117,7 @@ async function submitComment() {
   try {
     await api.post(`/articles/${route.params.id}/comments`, commentForm.value)
     commentForm.value = { nickname: commentForm.value.nickname, email: commentForm.value.email, content: '' }
+    commentPage.value = 0
     await loadComments()
   } catch (err) {
     commentError.value = err.response?.data?.message || '评论提交失败，请稍后再试'

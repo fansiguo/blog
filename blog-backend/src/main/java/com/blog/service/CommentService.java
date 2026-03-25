@@ -4,6 +4,8 @@ import com.blog.dto.CommentDTO;
 import com.blog.entity.Article;
 import com.blog.entity.Comment;
 import com.blog.repository.CommentRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,10 @@ public class CommentService {
 
     public List<Comment> findByArticleId(Long articleId) {
         return commentRepository.findByArticleIdAndVisibleTrueOrderByCreatedAtDesc(articleId);
+    }
+
+    public Page<Comment> findByArticleId(Long articleId, Pageable pageable) {
+        return commentRepository.findByArticleIdAndVisibleTrue(articleId, pageable);
     }
 
     @Transactional(readOnly = true)

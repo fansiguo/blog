@@ -4,6 +4,9 @@ import com.blog.dto.CommentDTO;
 import com.blog.entity.Comment;
 import com.blog.service.CommentService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +21,11 @@ public class CommentController {
     }
 
     @GetMapping("/api/articles/{articleId}/comments")
-    public List<Comment> list(@PathVariable Long articleId) {
-        return commentService.findByArticleId(articleId);
+    public Page<Comment> list(@PathVariable Long articleId,
+                              @RequestParam(defaultValue = "0") int page,
+                              @RequestParam(defaultValue = "10") int size) {
+        return commentService.findByArticleId(articleId,
+                PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt")));
     }
 
     @PostMapping("/api/articles/{articleId}/comments")
