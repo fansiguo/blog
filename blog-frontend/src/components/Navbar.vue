@@ -2,7 +2,7 @@
   <nav class="navbar">
     <div class="navbar-inner">
       <router-link to="/" class="logo">
-        <span class="logo-icon">B</span>
+        <img src="/logo.png" alt="Logo" class="logo-icon" />
         <span class="logo-text">Siguo Fan</span>
       </router-link>
       <div class="nav-links">
@@ -75,14 +75,8 @@ function logout() {
 .logo-icon {
   width: 32px;
   height: 32px;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
   border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
+  object-fit: cover;
 }
 .logo-text { letter-spacing: -0.5px; }
 .nav-links { display: flex; align-items: center; gap: 4px; }
