@@ -40,6 +40,17 @@ public class CommentService {
         return comments;
     }
 
+    @Transactional(readOnly = true)
+    public Page<Comment> findAll(Pageable pageable) {
+        Page<Comment> page = commentRepository.findAllWithArticle(pageable);
+        for (Comment c : page.getContent()) {
+            if (c.getArticle() != null) {
+                c.setArticleTitle(c.getArticle().getTitle());
+            }
+        }
+        return page;
+    }
+
     @Transactional
     public Comment toggleVisible(Long id) {
         Comment comment = commentRepository.findById(id).orElseThrow();

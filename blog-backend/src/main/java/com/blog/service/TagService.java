@@ -2,6 +2,8 @@ package com.blog.service;
 
 import com.blog.entity.Tag;
 import com.blog.repository.TagRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +20,10 @@ public class TagService {
 
     public List<Tag> findAll() {
         return tagRepository.findAll();
+    }
+
+    public Page<Tag> findAll(Pageable pageable) {
+        return tagRepository.findAll(pageable);
     }
 
     public Tag findById(Long id) {

@@ -36,8 +36,9 @@ public class CommentController {
     }
 
     @GetMapping("/api/admin/comments")
-    public List<Comment> listAll() {
-        return commentService.findAll();
+    public Page<Comment> listAll(@RequestParam(defaultValue = "0") int page,
+                                 @RequestParam(defaultValue = "10") int size) {
+        return commentService.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt")));
     }
 
     @PutMapping("/api/admin/comments/{id}/toggle-visible")
