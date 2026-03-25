@@ -63,8 +63,9 @@ const editName = ref('')
 
 async function loadCategories() {
   const { data } = await api.get('/admin/categories', { params: { page: page.value, size: 10 } })
-  categories.value = data.content
-  totalPages.value = data.totalPages
+  categories.value = data.content || data || []
+  const pg = data.page || data
+  totalPages.value = pg.totalPages || 0
 }
 
 async function handleAdd() {
