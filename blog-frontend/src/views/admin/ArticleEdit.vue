@@ -20,7 +20,7 @@
           <textarea v-model="form.summary" rows="2" placeholder="输入文章摘要（可选）" class="summary-input"></textarea>
         </div>
         <div class="form-item editor-wrapper">
-          <MdEditor v-model="form.content" language="zh-CN" :preview="false" :onUploadImg="onUploadImg" :toolbars="toolbars" style="height: calc(100vh - 280px); min-height: 500px; border-radius: var(--radius-md); overflow: hidden;" />
+          <MdEditor v-model="form.content" language="zh-CN" :preview="false" :onUploadImg="onUploadImg" :toolbars="toolbars" style="height: calc(100vh - 280px); min-height: 500px; border-radius: var(--radius-md);" />
         </div>
       </div>
 
@@ -73,7 +73,7 @@ const toolbars = [
   'title', 'sub', 'sup', 'quote', 'unorderedList', 'orderedList', 'task', '-',
   'codeRow', 'code', 'link', 'image', 'table', '-',
   'revoke', 'next', '=',
-  'preview', 'htmlPreview', 'fullscreen'
+  'preview', 'previewOnly', 'htmlPreview', 'pageFullscreen', 'fullscreen'
 ]
 const categories = ref([])
 const tags = ref([])
@@ -219,4 +219,18 @@ onMounted(loadData)
 .tag-checkbox:hover { border-color: var(--color-primary); }
 .tag-checkbox.checked { background: var(--color-primary-light); border-color: var(--color-primary); color: var(--color-primary); font-weight: 500; }
 .empty-hint { font-size: 13px; color: var(--color-text-muted); }
+</style>
+
+<style>
+/* Fullscreen editor needs to escape scoped styles */
+.md-editor-fullscreen {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 10001 !important;
+  height: 100vh !important;
+  border-radius: 0 !important;
+}
 </style>
