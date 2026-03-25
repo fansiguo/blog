@@ -29,6 +29,7 @@
         <div class="form-item">
           <textarea v-model="commentForm.content" placeholder="写下你的评论..." rows="4" required maxlength="2000"></textarea>
         </div>
+        <div v-if="commentError" class="comment-error">{{ commentError }}</div>
         <div class="form-actions">
           <button type="submit" class="btn btn-primary" :disabled="submitting">
             {{ submitting ? '提交中...' : '发表评论' }}
@@ -76,6 +77,7 @@ const article = ref(null)
 const comments = ref([])
 const submitting = ref(false)
 const commentForm = ref({ nickname: '', email: '', content: '' })
+const commentError = ref('')
 const md = new MarkdownIt({ html: true, linkify: true, typographer: true })
 
 const renderedContent = computed(() => {
@@ -96,10 +98,13 @@ async function loadComments() {
 async function submitComment() {
   if (!commentForm.value.nickname.trim() || !commentForm.value.content.trim()) return
   submitting.value = true
+  commentError.value = ''
   try {
     await api.post(`/articles/${route.params.id}/comments`, commentForm.value)
     commentForm.value = { nickname: commentForm.value.nickname, email: commentForm.value.email, content: '' }
     await loadComments()
+  } catch (err) {
+    commentError.value = err.response?.data?.message || '评论提交失败，请稍后再试'
   } finally {
     submitting.value = false
   }
@@ -222,6 +227,12 @@ onMounted(async () => {
   display: flex;
   justify-content: flex-end;
   margin-top: 12px;
+}
+
+.comment-error {
+  color: var(--color-danger, #e53e3e);
+  font-size: 14px;
+  margin-bottom: 8px;
 }
 
 .comment-list { display: flex; flex-direction: column; gap: 0; }
