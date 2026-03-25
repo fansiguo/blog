@@ -58,8 +58,9 @@ const totalPages = ref(0)
 
 async function loadArticles() {
   const { data } = await api.get('/admin/articles', { params: { page: page.value, size: 10 } })
-  articles.value = data.content
-  totalPages.value = data.totalPages
+  articles.value = data.content || data || []
+  const pg = data.page || data
+  totalPages.value = pg.totalPages || 0
 }
 
 async function handleDelete(id) {

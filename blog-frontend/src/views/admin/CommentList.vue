@@ -58,8 +58,9 @@ const totalPages = ref(0)
 
 async function loadComments() {
   const { data } = await api.get('/admin/comments', { params: { page: page.value, size: 10 } })
-  comments.value = data.content
-  totalPages.value = data.totalPages
+  comments.value = data.content || data || []
+  const pg = data.page || data
+  totalPages.value = pg.totalPages || 0
 }
 
 async function handleToggle(id) {

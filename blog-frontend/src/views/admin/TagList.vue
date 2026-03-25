@@ -63,8 +63,9 @@ const editName = ref('')
 
 async function loadTags() {
   const { data } = await api.get('/admin/tags', { params: { page: page.value, size: 10 } })
-  tags.value = data.content
-  totalPages.value = data.totalPages
+  tags.value = data.content || data || []
+  const pg = data.page || data
+  totalPages.value = pg.totalPages || 0
 }
 
 async function handleAdd() {
