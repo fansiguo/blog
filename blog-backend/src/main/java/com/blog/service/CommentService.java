@@ -24,7 +24,7 @@ public class CommentService {
     }
 
     public List<Comment> findAll() {
-        return commentRepository.findAllByOrderByCreatedAtDesc();
+        return commentRepository.findAllWithArticle();
     }
 
     @Transactional

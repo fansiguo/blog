@@ -8,6 +8,7 @@
       <table>
         <thead>
           <tr>
+            <th>文章</th>
             <th>昵称</th>
             <th>内容</th>
             <th>时间</th>
@@ -17,6 +18,7 @@
         </thead>
         <tbody>
           <tr v-for="item in comments" :key="item.id" :class="{ 'row-hidden': !item.visible }">
+            <td class="comment-article">{{ item.articleTitle || '-' }}</td>
             <td class="comment-nickname">{{ item.nickname }}</td>
             <td class="comment-content">{{ item.content }}</td>
             <td class="text-muted">{{ item.createdAt?.substring(0, 10) }}</td>
@@ -35,7 +37,7 @@
             </td>
           </tr>
           <tr v-if="comments.length === 0">
-            <td colspan="5" class="empty-row">暂无留言</td>
+            <td colspan="6" class="empty-row">暂无留言</td>
           </tr>
         </tbody>
       </table>
@@ -78,7 +80,8 @@ onMounted(loadComments)
   border: 1px solid var(--color-border-light);
 }
 
-.comment-nickname { font-weight: 500; white-space: nowrap; }
+.comment-article { max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+.comment-nickname { white-space: nowrap; }
 .comment-content { max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .text-muted { color: var(--color-text-muted); font-size: 13px; }
 

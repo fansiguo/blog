@@ -50,6 +50,8 @@ public class Comment {
     public Article getArticle() { return article; }
     public void setArticle(Article article) { this.article = article; }
     public Long getArticleId() { return articleId; }
+    @Transient
+    public String getArticleTitle() { return article != null ? article.getTitle() : null; }
     public Boolean getVisible() { return visible; }
     public void setVisible(Boolean visible) { this.visible = visible; }
     public LocalDateTime getCreatedAt() { return createdAt; }
