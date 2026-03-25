@@ -1,8 +1,8 @@
 <template>
   <div>
     <header class="page-header">
-      <h1>Latest Posts</h1>
-      <p class="page-subtitle">Thoughts, ideas, and stories</p>
+      <h1>最新文章</h1>
+      <p class="page-subtitle">思考、记录与分享</p>
     </header>
 
     <div v-if="articles.length === 0" class="empty-state">
