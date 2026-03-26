@@ -23,7 +23,7 @@ public class AdminArticleController {
     public Page<Article> list(@RequestParam(defaultValue = "0") int page,
                               @RequestParam(defaultValue = "10") int size) {
         return articleService.findAll(
-                PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt")));
+                PageRequest.of(page, Math.min(size, 100), Sort.by(Sort.Direction.DESC, "createdAt")));
     }
 
     @GetMapping("/{id}")
