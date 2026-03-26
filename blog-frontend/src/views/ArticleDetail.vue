@@ -62,6 +62,11 @@
     </footer>
   </div>
 
+  <div v-else-if="loadError" class="loading">
+    <p>{{ loadError }}</p>
+    <router-link to="/" class="back-link" style="margin-top:16px">返回首页</router-link>
+  </div>
+
   <div v-else class="loading">
     <div class="loading-spinner"></div>
     <p>加载中...</p>
@@ -77,6 +82,7 @@ import Pagination from '../components/Pagination.vue'
 
 const route = useRoute()
 const article = ref(null)
+const loadError = ref('')
 const comments = ref([])
 const commentPage = ref(0)
 const commentTotalPages = ref(0)
@@ -97,13 +103,17 @@ function formatDate(dt) {
 }
 
 async function loadComments() {
-  const { data } = await api.get(`/articles/${route.params.id}/comments`, {
-    params: { page: commentPage.value, size: 10 }
-  })
-  comments.value = data.content || []
-  const pg = data.page || data
-  commentTotalPages.value = pg.totalPages || 0
-  commentTotal.value = pg.totalElements || 0
+  try {
+    const { data } = await api.get(`/articles/${route.params.id}/comments`, {
+      params: { page: commentPage.value, size: 10 }
+    })
+    comments.value = data.content || []
+    const pg = data.page || data
+    commentTotalPages.value = pg.totalPages || 0
+    commentTotal.value = pg.totalElements || 0
+  } catch {
+    // 评论加载失败时不影响文章阅读，静默处理
+  }
 }
 
 function onCommentPageChange(p) {
@@ -128,10 +138,14 @@ async function submitComment() {
 }
 
 onMounted(async () => {
-  const { data } = await api.get(`/articles/${route.params.id}`)
-  article.value = data
-  document.title = data.title + ' - Siguo Fan'
-  await loadComments()
+  try {
+    const { data } = await api.get(`/articles/${route.params.id}`)
+    article.value = data
+    document.title = data.title + ' - Siguo Fan'
+    await loadComments()
+  } catch {
+    loadError.value = '文章加载失败，请稍后重试'
+  }
 })
 </script>
 
