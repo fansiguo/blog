@@ -61,7 +61,7 @@ public class CommentService {
     @Transactional
     public Comment create(Long articleId, CommentDTO dto) {
         Article article = articleService.findById(articleId);
-        if (article == null) {
+        if (article == null || article.getStatus() != Article.Status.PUBLISHED) {
             throw new IllegalArgumentException("文章不存在");
         }
         Comment comment = new Comment();
