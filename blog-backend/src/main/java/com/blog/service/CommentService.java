@@ -72,6 +72,7 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
+    @Transactional
     public void deleteById(Long id) {
         commentRepository.deleteById(id);
     }
