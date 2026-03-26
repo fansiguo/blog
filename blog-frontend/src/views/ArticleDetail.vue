@@ -84,7 +84,7 @@ const commentTotal = ref(0)
 const submitting = ref(false)
 const commentForm = ref({ nickname: '', email: '', content: '' })
 const commentError = ref('')
-const md = new MarkdownIt({ html: true, linkify: true, typographer: true })
+const md = new MarkdownIt({ html: false, linkify: true, typographer: true })
 
 const renderedContent = computed(() => {
   return article.value?.content ? md.render(article.value.content) : ''
