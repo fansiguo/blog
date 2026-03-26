@@ -7,8 +7,10 @@ import com.blog.entity.Tag;
 import com.blog.repository.ArticleRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Set;
 
@@ -66,6 +68,9 @@ public class ArticleService {
 
         if (dto.getCategoryId() != null) {
             Category category = categoryService.findById(dto.getCategoryId());
+            if (category == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "分类不存在: " + dto.getCategoryId());
+            }
             article.setCategory(category);
         } else {
             article.setCategory(null);
