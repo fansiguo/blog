@@ -42,7 +42,7 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public Page<Comment> findAll(Pageable pageable) {
-        Page<Comment> page = commentRepository.findAllWithArticle(pageable);
+        Page<Comment> page = commentRepository.findAll(pageable);
         for (Comment c : page.getContent()) {
             if (c.getArticle() != null) {
                 c.setArticleTitle(c.getArticle().getTitle());

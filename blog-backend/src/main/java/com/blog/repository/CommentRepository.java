@@ -16,10 +16,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Query("SELECT c FROM Comment c WHERE c.articleId = :articleId AND (c.visible = true OR c.visible IS NULL)")
     Page<Comment> findVisibleByArticleId(Long articleId, Pageable pageable);
 
-    @Query("SELECT c FROM Comment c JOIN FETCH c.article ORDER BY c.createdAt DESC")
+    @Query("SELECT c FROM Comment c LEFT JOIN FETCH c.article ORDER BY c.createdAt DESC")
     List<Comment> findAllWithArticle();
 
-    @Query(value = "SELECT c FROM Comment c JOIN FETCH c.article",
-           countQuery = "SELECT COUNT(c) FROM Comment c")
-    Page<Comment> findAllWithArticle(Pageable pageable);
+    Page<Comment> findAll(Pageable pageable);
 }
