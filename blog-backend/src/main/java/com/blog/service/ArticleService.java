@@ -52,6 +52,7 @@ public class ArticleService {
         return articleRepository.save(article);
     }
 
+    @Transactional
     public void deleteById(Long id) {
         articleRepository.deleteById(id);
     }
