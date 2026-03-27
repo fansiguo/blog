@@ -11,78 +11,85 @@ struct BlogApp: App {
 
     var body: some Scene {
         WindowGroup {
-            Group {
-                if authViewModel.isLoggedIn {
-                    TabView {
-                        NavigationStack {
-                            ArticleListView()
-                        }
-                        .tabItem {
-                            Image(systemName: "house")
-                            Text("首页")
-                        }
+            ZStack {
+                Color.blogBackground
+                    .ignoresSafeArea()
 
-                        NavigationStack {
-                            AdminArticleListView()
-                        }
-                        .tabItem {
-                            Image(systemName: "doc.text")
-                            Text("文章")
-                        }
+                Group {
+                    if authViewModel.isLoggedIn {
+                        TabView {
+                            NavigationStack {
+                                ArticleListView()
+                            }
+                            .tabItem {
+                                Image(systemName: "house")
+                                Text("首页")
+                            }
 
-                        NavigationStack {
-                            AdminCategoryView()
-                        }
-                        .tabItem {
-                            Image(systemName: "folder")
-                            Text("分类")
-                        }
+                            NavigationStack {
+                                AdminArticleListView()
+                            }
+                            .tabItem {
+                                Image(systemName: "doc.text")
+                                Text("文章")
+                            }
 
-                        NavigationStack {
-                            AdminTagView()
-                        }
-                        .tabItem {
-                            Image(systemName: "tag")
-                            Text("标签")
-                        }
+                            NavigationStack {
+                                AdminCategoryView()
+                            }
+                            .tabItem {
+                                Image(systemName: "folder")
+                                Text("分类")
+                            }
 
-                        NavigationStack {
-                            AdminCommentView()
+                            NavigationStack {
+                                AdminTagView()
+                            }
+                            .tabItem {
+                                Image(systemName: "tag")
+                                Text("标签")
+                            }
+
+                            NavigationStack {
+                                AdminCommentView()
+                            }
+                            .tabItem {
+                                Image(systemName: "bubble.left.and.bubble.right")
+                                Text("评论")
+                            }
                         }
-                        .tabItem {
-                            Image(systemName: "bubble.left.and.bubble.right")
-                            Text("评论")
+                        .tint(.blogPrimary)
+                    } else {
+                        TabView {
+                            NavigationStack {
+                                ArticleListView()
+                            }
+                            .tabItem {
+                                Image(systemName: "house")
+                                Text("首页")
+                            }
+
+                            NavigationStack {
+                                LoginView()
+                            }
+                            .tabItem {
+                                Image(systemName: "person.crop.circle")
+                                Text("登录")
+                            }
                         }
+                        .tint(.blogPrimary)
                     }
-                    .tint(.blogPrimary)
-                } else {
-                    TabView {
-                        NavigationStack {
-                            ArticleListView()
-                        }
-                        .tabItem {
-                            Image(systemName: "house")
-                            Text("首页")
-                        }
-
-                        NavigationStack {
-                            LoginView()
-                        }
-                        .tabItem {
-                            Image(systemName: "person.crop.circle")
-                            Text("登录")
-                        }
-                    }
-                    .tint(.blogPrimary)
                 }
             }
-            .background(Color.blogBackground)
             .environmentObject(authViewModel)
         }
     }
 
     private func configureAppearance() {
         let bgColor = UIColor(red: 238/255, green: 236/255, blue: 226/255, alpha: 1) // #eeece2
+
+        // Window background — fills safe area behind all views
+        UIWindow.appearance().backgroundColor = bgColor
 
         // Tab bar
         let tabBarAppearance = UITabBarAppearance()
