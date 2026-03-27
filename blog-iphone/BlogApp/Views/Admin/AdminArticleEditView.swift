@@ -122,26 +122,15 @@ struct AdminArticleEditView: View {
 
                                 FlowLayout(spacing: 8) {
                                     ForEach(viewModel.tags) { tag in
-                                        Button {
+                                        TagToggleButton(
+                                            name: tag.name,
+                                            isSelected: viewModel.selectedTagIds.contains(tag.id)
+                                        ) {
                                             if viewModel.selectedTagIds.contains(tag.id) {
                                                 viewModel.selectedTagIds.remove(tag.id)
                                             } else {
                                                 viewModel.selectedTagIds.insert(tag.id)
                                             }
-                                        } label: {
-                                            Text(tag.name)
-                                                .font(.system(size: 13))
-                                                .padding(.horizontal, 12)
-                                                .padding(.vertical, 6)
-                                                .background(
-                                                    viewModel.selectedTagIds.contains(tag.id)
-                                                        ? Color.blogPrimary : Color.blogBorderLight
-                                                )
-                                                .foregroundColor(
-                                                    viewModel.selectedTagIds.contains(tag.id)
-                                                        ? .white : .blogTextSecondary
-                                                )
-                                                .cornerRadius(16)
                                         }
                                     }
                                 }
@@ -183,7 +172,7 @@ struct AdminArticleEditView: View {
                 .disabled(viewModel.title.isEmpty || viewModel.isSaving)
             }
         }
-        .onChange(of: selectedPhoto) { _, newValue in
+        .onChange(of: selectedPhoto) { newValue in
             guard let item = newValue else { return }
             Task {
                 if let data = try? await item.loadTransferable(type: Data.self) {
@@ -194,6 +183,24 @@ struct AdminArticleEditView: View {
         }
         .task {
             await viewModel.loadData()
+        }
+    }
+}
+
+struct TagToggleButton: View {
+    let name: String
+    let isSelected: Bool
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Text(name)
+                .font(.system(size: 13))
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(isSelected ? Color.blogPrimary : Color.blogBorderLight)
+                .foregroundColor(isSelected ? .white : .blogTextSecondary)
+                .cornerRadius(16)
         }
     }
 }
