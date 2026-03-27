@@ -46,6 +46,7 @@
 		DDC8D46B2D2774EC40D5E4F8 /* AdminTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B96A59E29298D9F9D95DB4 /* AdminTabView.swift */; };
 		DF3E52E96E096065147C30FE /* AdminArticleEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489FF968B3E2172B2A7923E3 /* AdminArticleEditViewModel.swift */; };
 		F0B5DA7F5098668D25AAFF3A /* ArticleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25785BEDCACBBA4348BDE4B /* ArticleListView.swift */; };
+		F7AE2385C06A81B7583BE491 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 877543D2F98D61EFAB88497A /* Assets.xcassets */; };
 		FA3627C93F94D5A7BC784B54 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B15598AFB71C0C59EEBC28 /* APIClient.swift */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +73,7 @@
 		7D6DB62C5633511188084D7F /* PageResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageResponse.swift; sourceTree = "<group>"; };
 		7F07A72A381A0286EA97D97A /* AdminCommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminCommentViewModel.swift; sourceTree = "<group>"; };
 		843969E8B3D6E1D8588552A3 /* ArticleListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleListViewModel.swift; sourceTree = "<group>"; };
+		877543D2F98D61EFAB88497A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		880A46244F5E36CB177A681E /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		895E3BB332242CF475D9B8E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9D358854F11F9E20F1BBB166 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 		B7810FDD838D6DF5CD6F0B28 /* BlogApp */ = {
 			isa = PBXGroup;
 			children = (
+				877543D2F98D61EFAB88497A /* Assets.xcassets */,
 				4972C884E92621D92428E323 /* BlogApp.swift */,
 				895E3BB332242CF475D9B8E6 /* Info.plist */,
 				3E77B157CA09553F0F799CF4 /* Components */,
@@ -255,6 +258,7 @@
 			buildConfigurationList = 9CF1021BB4EF69B5E949B5F4 /* Build configuration list for PBXNativeTarget "BlogApp" */;
 			buildPhases = (
 				4E0AFE89CC8CDFE154A2BE93 /* Sources */,
+				151D517586D0929F4BBBFFCC /* Resources */,
 			);
 			buildRules = (
 			);
@@ -296,6 +300,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		151D517586D0929F4BBBFFCC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7AE2385C06A81B7583BE491 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4E0AFE89CC8CDFE154A2BE93 /* Sources */ = {
