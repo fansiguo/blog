@@ -92,7 +92,7 @@ struct AdminTagView: View {
                 .listStyle(.plain)
             }
         }
-        .background(Color.blogBackground)
+        .background(Color.blogBackground.ignoresSafeArea())
         .navigationTitle("标签管理")
         .alert("确认删除", isPresented: $showDeleteAlert) {
             Button("取消", role: .cancel) {}

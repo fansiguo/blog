@@ -80,7 +80,7 @@ struct ArticleListView: View {
                 }
             }
         }
-        .background(Color.blogBackground)
+        .background(Color.blogBackground.ignoresSafeArea())
         .navigationDestination(for: Int.self) { id in
             ArticleDetailView(articleId: id)
         }

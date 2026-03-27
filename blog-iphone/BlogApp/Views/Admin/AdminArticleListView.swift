@@ -81,6 +81,7 @@ struct AdminArticleListView: View {
                 .listStyle(.plain)
             }
         }
+        .background(Color.blogBackground.ignoresSafeArea())
         .navigationTitle("文章管理")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

@@ -68,7 +68,7 @@ struct ArticleDetailView: View {
                 }
             }
         }
-        .background(Color.blogBackground)
+        .background(Color.blogBackground.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
         .task {
             await viewModel.loadArticle()

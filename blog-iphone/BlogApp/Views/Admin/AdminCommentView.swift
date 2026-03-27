@@ -94,6 +94,7 @@ struct AdminCommentView: View {
                 .listStyle(.plain)
             }
         }
+        .background(Color.blogBackground.ignoresSafeArea())
         .navigationTitle("评论管理")
         .alert("确认删除", isPresented: $showDeleteAlert) {
             Button("取消", role: .cancel) {}

@@ -150,7 +150,7 @@ struct AdminArticleEditView: View {
                 }
             }
         }
-        .background(Color.blogBackground)
+        .background(Color.blogBackground.ignoresSafeArea())
         .navigationTitle(viewModel.articleId == nil ? "新建文章" : "编辑文章")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
