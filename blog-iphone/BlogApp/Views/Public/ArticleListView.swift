@@ -80,7 +80,10 @@ struct ArticleListView: View {
                 }
             }
         }
-        .background(Color.blogBackground.ignoresSafeArea())
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.blogBackground)
+        .toolbarBackground(Color.blogBackground, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
         .navigationDestination(for: Int.self) { id in
             ArticleDetailView(articleId: id)
         }

@@ -92,8 +92,11 @@ struct AdminCategoryView: View {
                 .listStyle(.plain)
             }
         }
-        .background(Color.blogBackground.ignoresSafeArea())
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.blogBackground)
         .navigationTitle("分类管理")
+        .toolbarBackground(Color.blogBackground, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
         .alert("确认删除", isPresented: $showDeleteAlert) {
             Button("取消", role: .cancel) {}
             Button("删除", role: .destructive) {

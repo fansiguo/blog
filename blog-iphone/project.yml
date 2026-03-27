@@ -13,6 +13,10 @@ targets:
       - BlogApp
     info:
       path: BlogApp/Info.plist
+      properties:
+        UIUserInterfaceStyle: Light
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.siguofan.blog

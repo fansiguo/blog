@@ -92,6 +92,9 @@ struct LoginView: View {
             Spacer()
         }
         .padding(.horizontal, 32)
-        .background(Color.blogBackground.ignoresSafeArea())
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.blogBackground)
+        .toolbarBackground(Color.blogBackground, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
     }
 }

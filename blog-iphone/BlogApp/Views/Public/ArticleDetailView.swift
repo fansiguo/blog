@@ -68,8 +68,11 @@ struct ArticleDetailView: View {
                 }
             }
         }
-        .background(Color.blogBackground.ignoresSafeArea())
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.blogBackground)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(Color.blogBackground, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
         .task {
             await viewModel.loadArticle()
             await viewModel.loadComments()

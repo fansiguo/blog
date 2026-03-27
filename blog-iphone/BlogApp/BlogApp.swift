@@ -1,8 +1,13 @@
 import SwiftUI
+import UIKit
 
 @main
 struct BlogApp: App {
     @StateObject private var authViewModel = AuthViewModel()
+
+    init() {
+        configureAppearance()
+    }
 
     var body: some Scene {
         WindowGroup {
@@ -71,7 +76,29 @@ struct BlogApp: App {
                     .tint(.blogPrimary)
                 }
             }
+            .background(Color.blogBackground)
             .environmentObject(authViewModel)
         }
+    }
+
+    private func configureAppearance() {
+        let bgColor = UIColor(red: 238/255, green: 236/255, blue: 226/255, alpha: 1) // #eeece2
+
+        // Tab bar
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.configureWithOpaqueBackground()
+        tabBarAppearance.backgroundColor = bgColor
+        UITabBar.appearance().standardAppearance = tabBarAppearance
+        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+
+        // Navigation bar
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.backgroundColor = bgColor
+        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor(red: 26/255, green: 26/255, blue: 46/255, alpha: 1)]
+        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor(red: 26/255, green: 26/255, blue: 46/255, alpha: 1)]
+        UINavigationBar.appearance().standardAppearance = navBarAppearance
+        UINavigationBar.appearance().compactAppearance = navBarAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
     }
 }

@@ -150,9 +150,12 @@ struct AdminArticleEditView: View {
                 }
             }
         }
-        .background(Color.blogBackground.ignoresSafeArea())
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.blogBackground)
         .navigationTitle(viewModel.articleId == nil ? "新建文章" : "编辑文章")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(Color.blogBackground, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
